@@ -153,10 +153,13 @@
       <h2>Prenota la tua prima lezione.</h2>
       <p class="sommario">Lascia i tuoi dati: ti ricontatto io e troviamo insieme il momento giusto per cominciare.</p>
 
-      <!-- Il modulo arriva per email a Morena tramite FormSubmit (formsubmit.co) -->
+      <!-- Il modulo arriva per email a Morena tramite FormSubmit (formsubmit.co).
+           Invio classico e non AJAX: solo così FormSubmit manda la conferma automatica a chi lascia l'email. -->
       <form class="modulo" id="modulo-contatto" action="https://formsubmit.co/morena.anastasi2.95@gmail.com" method="POST">
         <input type="hidden" name="_subject" value="Nuova richiesta dal sito Morena Energy">
         <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="https://davidemcb.github.io/morena-energy/grazie.html">
+        <input type="hidden" name="_autoresponse" id="campo-conferma" value="Ciao! Grazie per avermi scritto. Ho ricevuto la tua richiesta e ti ricontatto io al più presto, per trovare insieme il momento giusto per la tua prima lezione. Se preferisci sentirci subito, mi trovi su WhatsApp al 371 368 2776. A presto, Morena · Morena Energy">
         <input type="text" name="_honey" id="campo-honey" tabindex="-1" autocomplete="off" hidden>
         <div class="campo">
           <label for="campo-nome">Nome e cognome</label>
@@ -167,7 +170,7 @@
           <input type="tel" id="campo-telefono" name="Telefono" autocomplete="tel" inputmode="tel" required>
         </div>
         <div class="campo">
-          <label for="campo-email">Email <small>(facoltativa)</small></label>
+          <label for="campo-email">Email <small>(facoltativa, per ricevere la conferma)</small></label>
           <input type="email" id="campo-email" name="email" autocomplete="email">
         </div>
         <div class="campo">
@@ -216,50 +219,29 @@
 </footer>
 
 <script>
-// Invio del modulo senza lasciare la pagina; se lo script non parte, il modulo si invia comunque in modo classico
+// Il modulo si invia in modo classico a FormSubmit: verifica anti-robot, poi la pagina grazie.html
 (function () {
   var modulo = document.getElementById("modulo-contatto");
   if (!modulo) return;
   var bottone = document.getElementById("modulo-bottone");
   var esito = document.getElementById("modulo-esito");
-
-  function mostra(testo, errore) {
-    esito.textContent = testo;
-    esito.classList.toggle("errore", !!errore);
-    esito.hidden = false;
-  }
+  var conferma = document.getElementById("campo-conferma");
 
   modulo.addEventListener("submit", function (evento) {
-    evento.preventDefault();
-    var indirizzo = modulo.getAttribute("action");
-    if (!indirizzo) {
-      mostra("Questa è un'anteprima: l'invio funziona solo sul sito pubblicato.", true);
+    if (!modulo.getAttribute("action")) {
+      evento.preventDefault();
+      esito.textContent = "Questa è un'anteprima: l'invio funziona solo sul sito pubblicato.";
+      esito.classList.add("errore");
+      esito.hidden = false;
       return;
     }
-    var dati = {};
-    new FormData(modulo).forEach(function (valore, chiave) { dati[chiave] = valore; });
-    bottone.disabled = true;
+    // senza email non c'è nessuno a cui mandare la conferma automatica
+    conferma.disabled = !document.getElementById("campo-email").value.trim();
     bottone.textContent = "Invio in corso…";
-    fetch(indirizzo.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(dati)
-    })
-      .then(function (risposta) { return risposta.json(); })
-      .then(function (risposta) {
-        if (String(risposta.success) !== "true") throw new Error(risposta.message || "invio rifiutato");
-        modulo.reset();
-        mostra("Richiesta inviata. Ti ricontatto io al più presto.");
-      })
-      .catch(function (errore) {
-        console.warn("Modulo non inviato:", errore && errore.message);
-        mostra("Invio non riuscito. Riprova tra poco, oppure scrivimi su WhatsApp al 371 368 2776.", true);
-      })
-      .then(function () {
-        bottone.disabled = false;
-        bottone.textContent = "Invia la richiesta";
-      });
   });
+
+  // se si torna indietro dalla pagina di verifica, il bottone torna normale
+  window.addEventListener("pageshow", function () { bottone.textContent = "Invia la richiesta"; });
 })();
 </script>
 

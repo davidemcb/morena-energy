@@ -360,6 +360,7 @@ a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 6
 .pagina-testo ul { padding-left: 1.2em; margin: 0 0 1.1em; display: grid; gap: 10px; }
 .pagina-testo a { color: var(--blu); font-weight: 700; text-underline-offset: 3px; }
 .pagina-testo a:focus-visible { outline: 3px solid var(--blu); }
+.pagina-testo a.bottone-pieno { color: #fff; margin-top: 14px; }
 
 /* Schermi medi e piccoli */
 @media (max-width: 960px) {
