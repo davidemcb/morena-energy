@@ -4,6 +4,7 @@
   --blu-scuro: #171F5C;
   --prugna: #934263;
   --arancio: #E84E1A;
+  --arancio-scuro: #C63D0E;
   --inchiostro: #1A1D3A;
   --grigio: #55587A;
   --carta: #FFFBF8;
@@ -240,6 +241,37 @@ a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 6
 .passi h3 { margin-bottom: 10px; }
 .passi p { color: var(--grigio); }
 
+/* Fasi della gravidanza: prima, durante, dopo */
+.introduzione { max-width: 38em; margin-top: 18px; }
+.fasi {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+.fasi li { border-top: 3px solid var(--blu); padding-top: 22px; }
+.fasi li:nth-child(2) { border-color: var(--prugna); }
+.fasi li:nth-child(3) { border-color: var(--arancio); }
+.fase {
+  display: inline-block;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--blu);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 14px;
+}
+.fasi li:nth-child(2) .fase { background: var(--prugna); }
+.fasi li:nth-child(3) .fase { background: var(--arancio-scuro); }
+.fasi h3 { margin-bottom: 10px; }
+.fasi p { color: var(--grigio); }
+.nota { color: var(--grigio); font-size: 0.98rem; margin: 34px 0 24px; max-width: 44em; }
+
 /* Chiusura e contatti */
 .chiusura {
   background: var(--sfumatura);
@@ -376,7 +408,8 @@ a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 6
   .apertura-foto { justify-self: center; width: min(78%, 340px); }
   .pallino { width: 48px; height: 48px; left: -14px; }
   .sezione { padding: 68px 0; }
-  .schede, .passi, .contatti, .modulo { grid-template-columns: 1fr; }
+  .schede, .passi, .fasi, .contatti, .modulo { grid-template-columns: 1fr; }
+  .fasi { gap: 28px; }
   .modulo { padding: 24px 20px; }
   .passi { gap: 28px; }
   .chiusura { padding: 76px 0; }
