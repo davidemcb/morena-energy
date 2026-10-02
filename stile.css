@@ -347,6 +347,19 @@ a:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 6
 .piede { background: var(--blu-scuro); color: rgba(255, 255, 255, 0.8); padding: 30px 0; font-size: 0.95rem; }
 .piede-riga { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .piede img { height: 44px; width: auto; }
+.piede a { color: #fff; text-underline-offset: 4px; }
+.consenso a { color: var(--blu); font-weight: 700; text-underline-offset: 3px; }
+.consenso a:focus-visible { outline: 3px solid var(--blu); }
+
+/* Pagine di solo testo (informativa privacy) */
+.pagina-testo { padding: 128px 0 88px; }
+.pagina-testo .contenitore { max-width: 720px; }
+.pagina-testo h1 { font-size: clamp(2.1rem, 5vw, 3rem); color: var(--blu); }
+.pagina-testo h2 { font-size: 1.5rem; color: var(--blu); margin: 2em 0 0.5em; }
+.pagina-testo .aggiornamento { color: var(--grigio); font-size: 0.95rem; margin: 10px 0 28px; }
+.pagina-testo ul { padding-left: 1.2em; margin: 0 0 1.1em; display: grid; gap: 10px; }
+.pagina-testo a { color: var(--blu); font-weight: 700; text-underline-offset: 3px; }
+.pagina-testo a:focus-visible { outline: 3px solid var(--blu); }
 
 /* Schermi medi e piccoli */
 @media (max-width: 960px) {
